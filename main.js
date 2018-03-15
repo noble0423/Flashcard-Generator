@@ -10,14 +10,12 @@ var firstPresident = new BasicCard (
 // firstPresident.printBack();
 
 var firstPresidentCloze = new ClozeCard (
-    "George Washington",
-    "...was the first president of the United States.",
-    "George Washington was the first president of the United States."
-   
+    "was the first president of the United States.",
+    "George Washington"
 );
 
-// firstPresidentCloze.printPartial();
-// firstPresidentCloze.printFull();
+firstPresidentCloze.printPartial();
 // firstPresidentCloze.printCloze();
+firstPresidentCloze.printFull();
 
 // Should throw and/or log an error be
