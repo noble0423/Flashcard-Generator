@@ -1,5 +1,9 @@
+//VARIABLES
+//===============================================================================================================================================================
+
 var BasicCard = require('./BasicCard.js');
 var ClozeCard = require('./ClozeCard.js');
+var inquirer = require("inquirer");
 
 var cards = [];
 var questionCounter = 0;
@@ -19,7 +23,7 @@ var card2 = new BasicCard (
 
 
 var card3 = new BasicCard (
-    "In 1892, the Massachusetts town that is most famous for a series of witch trials is?",
+    "The Massachusetts town that is most famous for a series of witch trials in 1892 is?",
     "Salem"
 );
 
@@ -28,14 +32,10 @@ var card4 = new BasicCard (
     "Washington"
 );
 
-
 var card5 = new BasicCard (
-    "What US state along with Texas celebrated its centenary of joining the Union in 1945??",
+    "What U.S. state along with Texas celebrated it's centennial of joining the Union in 1945?",
     "Florida"
 );
-
-// firstPresident.printFront();
-// firstPresident.printBack();
 
 var card6 = new ClozeCard (
     "was acquired from Russia in the year 1867.",
@@ -53,18 +53,54 @@ var card8 = new ClozeCard (
 );
 
 var card9 = new ClozeCard (
-    "was the very first Federal Capital of the United States of America (from Sept. 5, 1774 - Oct. 26, 1774).",
+    "was the very first Federal Capital of the United States of America from Sept. 5, 1774 - Oct. 26, 1774.",
     "Philadelphia"
 );
 
 var card10 = new ClozeCard (
-    "is known by the following 3 state nicknames: Mother of Presidents, Mother of States, and The Old Dominion (official state nickname).",
+    "is known by the following three state nicknames: Mother of Presidents, Mother of States, and The Old Dominion (official state nickname).",
     "Virginia"
 );
 
-// firstPresidentCloze.printPartial();
-// firstPresidentCloze.printCloze();
-// firstPresidentCloze.printFull();
+
+// FUNCTIONS
+//===============================================================================================================================================================
+
+// Function that starts the game
+function start() {
+    inquirer.prompt({
+        name: "start",
+        type: "list",
+        message: "Are you ready to start playing the U.S. city and state flashcard game?",
+        choices: ["Yes", "No"]
+    }).then(function(answer) {
+        if (answer.start.toLowerCase() === "yes") {
+            //run questions function
+            console.log("user selected yes!");
+        }
+        else {
+            console.log("Ok. When you feel up for the challenge, let me know.");
+        }
+    })
+}
+
+// Function to start asking question. t will wait for user answer before moving onto the next question and once all questions have been asked, it will run a Game Over Screen that prints correct/incorrect stats
+function askQuestions() {
+
+}
+
+
+// GAME LOGIC
+//===============================================================================================================================================================
+start();
+
+
+// card5.printFront();
+// card5.printBack();
+
+// card10.printPartial();
+// card10.printCloze();
+// card10.printFull();
 
 // var testCloze = new ClozeCard (
 //     "moved to Califonia in May 2017.",
