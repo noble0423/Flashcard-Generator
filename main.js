@@ -79,6 +79,7 @@ function start() {
         }
     ]).then(function(answer) {
         if (answer.start.toLowerCase() === "yes") {
+            console.log("================================================================================================================================\n");
             askQuestions();
         }
         else {
@@ -99,14 +100,16 @@ function askQuestions() {
                     message: cards[questionCount].front
                 }
             ]).then(function(data) {
-                console.log("You guessed " + data.basicAnswer);
+                console.log("\nYou guessed " + data.basicAnswer);
                 if (data.basicAnswer.toLowerCase() === cards[questionCount].back.toLowerCase()) {
                     console.log("Correct!");
+                    console.log("\n===================================================================================================================\n");
                     questionCount++;
                     correctCounter++;
                 }
                 else {
                     console.log("Nope. The correct answer is actually " + cards[questionCount].back);
+                    console.log("\n===================================================================================================================\n");
                     questionCount++;
                     incorrectCounter++;
                 }
@@ -121,14 +124,16 @@ function askQuestions() {
                     message: cards[questionCount].partial
                 }
             ]).then(function(data) {
-                console.log("You guessed " + data.clozeAnswer);
+                console.log("\nYou guessed " + data.clozeAnswer);
                 if (data.clozeAnswer.toLowerCase() === cards[questionCount].cloze.toLowerCase()) {
                     console.log("Correct!\n" + cards[questionCount].full);
+                    console.log("\n===================================================================================================================\n");
                     questionCount++;
                     correctCounter++;
                 } 
                 else {
                     console.log("Nope. The correct answer is actually " + cards[questionCount].cloze + ".\n" + cards[questionCount].full);
+                    console.log("\n===================================================================================================================\n");
                     questionCount++;
                     incorrectCounter++;
                 }
@@ -143,9 +148,11 @@ function askQuestions() {
 
 // Function to display stats
 function printStats() {
+    console.log("\n/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\n");
     console.log("Total Flashcards Shown: " + questionCount + ".");
     console.log("You answered " + correctCounter + " correctly!");
     console.log("Unfortunately, you answered " + incorrectCounter + " incorrectly.");
+    console.log("\n/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\n");
 };
 
 
