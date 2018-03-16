@@ -6,9 +6,9 @@ var ClozeCard = require('./ClozeCard.js');
 var inquirer = require("inquirer");
 
 var cards = [];
-var questionCounter = 0;
-var correct = 0;
-var incorrect = 0;
+var questionCount = 0;
+var correctCounter = 0;
+var incorrectCounter = 0;
 
 
 var card1 = new BasicCard (
@@ -62,6 +62,9 @@ var card10 = new ClozeCard (
     "Virginia"
 );
 
+cards.push(card1, card2, card3, card4, card5);
+// console.log(cards);
+
 
 // FUNCTIONS
 //===============================================================================================================================================================
@@ -84,28 +87,75 @@ function start() {
     })
 }
 
-// Function to start asking question. t will wait for user answer before moving onto the next question and once all questions have been asked, it will run a Game Over Screen that prints correct/incorrect stats
-function askQuestions() {
+// Function to start asking question. it will wait for user answer before moving onto the next question and once all questions have been asked, it will run a Game Over Screen that prints correct/incorrect stats
 
+function askQuestions() {
+    console.log(questionCount);
+    if (questionCount < 5) {
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "basicAnswer",
+                message: cards[questionCount].front
+            }
+        ]).then(function(data) {
+            console.log("You guessed " + data.basicAnswer);
+            if (data.basicAnswer.toLowerCase() === cards[questionCount].back.toLowerCase()) {
+                console.log("Correct!");
+                questionCount++;
+                correctCounter++;
+                // console.log(questionCount);
+            }
+            else {
+                console.log("Nope. The correct answer is actually " + cards[questionCount].back);
+                questionCount++;
+                incorrectCounter++;
+                // console.log(questionCount);
+            }
+            askQuestions();
+        }); 
+    } 
+    else {
+        printStats();
+    }
+}
+
+
+// questionCount++;  
+// console.log(questionCount);
+
+// function askQuestions() {
+// inquirer.prompt([
+//     {
+//         type: "input",
+//         name: "clozeAnswer",
+//         message: card6.partial
+//     }
+// ]).then(function(data) {
+//     questionCount++;
+//     console.log("You guessed " + data.clozeAnswer);
+//     if (data.clozeAnswer.toLowerCase() === card6.cloze.toLowerCase()) {
+//         correctCounter++;
+//         console.log("Correct!\n" + card6.full);
+//     } 
+//     else {
+//         incorrectCounter++;
+//         console.log("Nope. The correct answer is actually " + card6.cloze + ".\n" + card6.full);
+//     }
+// })
+// }
+
+// Function to display stats
+function printStats() {
+    console.log("Total Flashcards Shown: " + questionCount + ".");
+    console.log("You answered " + correctCounter + " correctly!");
+    // if (incorrectCounter > 0) {
+        console.log("Unfortunately, you answered " + incorrectCounter + " incorrectly.");
+    // }
 }
 
 
 // GAME LOGIC
 //===============================================================================================================================================================
-start();
-
-
-// card5.printFront();
-// card5.printBack();
-
-// card10.printPartial();
-// card10.printCloze();
-// card10.printFull();
-
-// var testCloze = new ClozeCard (
-//     "moved to Califonia in May 2017.",
-//     "Ryan Marlay Noble"
-// )
-
-// testCloze.printPartial();
-// testCloze.printFull();
+// start();
+askQuestions();
