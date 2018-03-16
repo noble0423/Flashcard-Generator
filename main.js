@@ -6,7 +6,7 @@ var ClozeCard = require('./ClozeCard.js');
 var inquirer = require("inquirer");
 
 var cards = [];
-var questionCount = 5;
+var questionCount = 0;
 var correctCounter = 0;
 var incorrectCounter = 0;
 
@@ -89,67 +89,89 @@ function start() {
 
 // Function to start asking question. it will wait for user answer before moving onto the next question and once all questions have been asked, it will run a Game Over Screen that prints correct/incorrect stats
 
-// function askQuestions() {
-//     console.log(questionCount);
-//     if (questionCount < 10) {
-//         if (cards[questionCount].type === "basic") {
-//             inquirer.prompt([
-//                 {
-//                     type: "input",
-//                     name: "basicAnswer",
-//                     message: cards[questionCount].front
-//                 }
-//             ]).then(function(data) {
-//                 console.log("You guessed " + data.basicAnswer);
-//                 if (data.basicAnswer.toLowerCase() === cards[questionCount].back.toLowerCase()) {
-//                     console.log("Correct!");
-//                     questionCount++;
-//                     correctCounter++;
-//                     // console.log(questionCount);
-//                 }
-//                 else {
-//                     console.log("Nope. The correct answer is actually " + cards[questionCount].back);
-//                     questionCount++;
-//                     incorrectCounter++;
-//                     // console.log(questionCount);
-//                 }
-//                 askQuestions();
-//             }); 
-//         }
-//     } 
-//     else {
-//         printStats();
-//     }
-// }
-
 function askQuestions() {
     console.log(questionCount);
     if (questionCount < 10) {
-        inquirer.prompt([
-            {
-                type: "input",
-                name: "clozeAnswer",
-                message: cards[questionCount].partial
-            }
-        ]).then(function(data) {
-            console.log("You guessed " + data.clozeAnswer);
-            if (data.clozeAnswer.toLowerCase() === cards[questionCount].cloze.toLowerCase()) {
-                console.log("Correct!\n" + cards[questionCount].full);
-                questionCount++;
-                correctCounter++;
-            } 
-            else {
-                console.log("Nope. The correct answer is actually " + cards[questionCount].cloze + ".\n" + cards[questionCount].full);
-                questionCount++;
-                incorrectCounter++;
-            }
-            askQuestions();
-        });
-    }
+        if (cards[questionCount].type === "basic") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "basicAnswer",
+                    message: cards[questionCount].front
+                }
+            ]).then(function(data) {
+                console.log("You guessed " + data.basicAnswer);
+                if (data.basicAnswer.toLowerCase() === cards[questionCount].back.toLowerCase()) {
+                    console.log("Correct!");
+                    questionCount++;
+                    correctCounter++;
+                    // console.log(questionCount);
+                }
+                else {
+                    console.log("Nope. The correct answer is actually " + cards[questionCount].back);
+                    questionCount++;
+                    incorrectCounter++;
+                    // console.log(questionCount);
+                }
+                askQuestions();
+            }); 
+        }
+        else if (cards[questionCount].type === "cloze") {
+            inquirer.prompt([
+                {
+                    type: "input",
+                    name: "clozeAnswer",
+                    message: cards[questionCount].partial
+                }
+            ]).then(function(data) {
+                console.log("You guessed " + data.clozeAnswer);
+                if (data.clozeAnswer.toLowerCase() === cards[questionCount].cloze.toLowerCase()) {
+                    console.log("Correct!\n" + cards[questionCount].full);
+                    questionCount++;
+                    correctCounter++;
+                } 
+                else {
+                    console.log("Nope. The correct answer is actually " + cards[questionCount].cloze + ".\n" + cards[questionCount].full);
+                    questionCount++;
+                    incorrectCounter++;
+                }
+                askQuestions();
+            });
+        }
+    } 
     else {
         printStats();
     }
 }
+
+// function askQuestions() {
+//     console.log(questionCount);
+//     if (questionCount < 10) {
+//         inquirer.prompt([
+//             {
+//                 type: "input",
+//                 name: "clozeAnswer",
+//                 message: cards[questionCount].partial
+//             }
+//         ]).then(function(data) {
+//             console.log("You guessed " + data.clozeAnswer);
+//             if (data.clozeAnswer.toLowerCase() === cards[questionCount].cloze.toLowerCase()) {
+//                 console.log("Correct!\n" + cards[questionCount].full);
+//                 questionCount++;
+//                 correctCounter++;
+//             } 
+//             else {
+//                 console.log("Nope. The correct answer is actually " + cards[questionCount].cloze + ".\n" + cards[questionCount].full);
+//                 questionCount++;
+//                 incorrectCounter++;
+//             }
+//             askQuestions();
+//         });
+//     }
+//     else {
+//         printStats();
+//     }
+// }
 
 
 // Function to display stats
